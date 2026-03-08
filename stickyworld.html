@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StickyWorld Pro</title><!-- Google Font --><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+:root{
+--primary:#ff4d6d;
+--secondary:#6c5ce7;
+--accent:#00d1b2;
+--dark:#1f2937;
+--light:#f9fafb;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,system-ui}
+body{background:var(--light);color:var(--dark)}
+button{cursor:pointer;border:none}
+
+/* HEADER */
+header{
+background:#fff;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;
+box-shadow:0 4px 18px rgba(0,0,0,.08);position:sticky;top:0;z-index:1000;
+}
+.logo{font-weight:700;font-size:22px;color:var(--primary);letter-spacing:1px}
+nav{display:flex;gap:18px;align-items:center}
+nav a{text-decoration:none;color:var(--dark);font-weight:500}
+nav a:hover{color:var(--primary)}
+
+.search-box{position:relative}
+.search-box input{
+padding:9px 34px 9px 12px;border-radius:20px;border:1px solid #e5e7eb;width:200px
+}
+.search-box span{position:absolute;right:10px;top:7px;opacity:.5}
+
+.cart-icon{position:relative;font-size:20px}
+.cart-count{
+position:absolute;top:-8px;right:-10px;background:var(--primary);color:#fff;
+border-radius:50%;padding:2px 6px;font-size:11px
+}
+
+/* HERO */
+.hero{
+background:linear-gradient(135deg,var(--secondary),var(--primary));
+color:#fff;text-align:center;padding:70px 20px
+}
+.hero h1{font-size:42px;margin-bottom:10px}
+.hero p{opacity:.9}
+.hero button{
+margin-top:18px;background:#fff;color:var(--secondary);padding:10px 22px;border-radius:25px;font-weight:600
+}
+
+.container{max-width:1200px;margin:auto;padding:40px 18px}
+
+/* FILTERS */
+.filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.filter-btn{
+padding:8px 16px;border-radius:20px;background:#fff;border:1px solid #e5e7eb;font-weight:600
+}
+.filter-btn.active,.filter-btn:hover{background:var(--secondary);color:#fff}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
+.card{
+background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.06);
+display:flex;flex-direction:column;transition:.2s
+}
+.card:hover{transform:translateY(-4px)}
+.card img{width:100%;height:180px;object-fit:cover}
+.info{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.title{font-weight:600}
+.price{color:var(--primary);font-weight:700}
+
+.rating{font-size:13px;color:#f59e0b}
+
+.actions{margin-top:auto;display:flex;gap:8px}
+.add{flex:1;background:var(--dark);color:#fff;padding:8px;border-radius:8px}
+.buy{flex:1;background:var(--accent);color:#fff;padding:8px;border-radius:8px}
+
+/* CART DRAWER */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:1200}
+.overlay.show{display:block}
+
+.cart{
+position:fixed;right:-420px;top:0;width:380px;height:100%;background:#fff;
+box-shadow:-6px 0 24px rgba(0,0,0,.15);transition:.3s;z-index:1300;
+display:flex;flex-direction:column;padding:18px
+}
+.cart.open{right:0}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cart-items{flex:1;overflow:auto}
+.item{display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:6px}
+.small{font-size:12px;opacity:.7}
+.remove{background:#ef4444;color:#fff;border-radius:4px;padding:2px 6px;font-size:11px}
+.total{font-weight:700;margin:12px 0}
+.checkout{background:#25D366;color:#fff;padding:10px;border-radius:10px;font-weight:700}
+
+/* MOBILE CART BAR */
+.mobile-bar{
+position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -4px 18px rgba(0,0,0,.1);
+display:none;justify-content:space-between;align-items:center;padding:10px 14px;z-index:1100
+}
+.mobile-bar button{background:var(--primary);color:#fff;padding:8px 14px;border-radius:8px}
+
+footer{background:var(--dark);color:#fff;text-align:center;padding:30px;margin-top:60px}
+
+@media(max-width:640px){
+nav{display:none}
+.search-box input{width:140px}
+.hero h1{font-size:28px}
+.cart{width:100%}
+.mobile-bar{display:flex}
+}
+</style></head>
+<body><header>
+<div class="logo">StickyWorld</div>
+<nav>
+<a href="#">Home</a>
+<a href="#">Shop</a>
+<a href="#">New</a>
+<a href="#">Contact</a>
+</nav>
+<div style="display:flex;gap:12px;align-items:center">
+<div class="search-box">
+<input placeholder="Search stickers" oninput="searchItems(this.value)">
+<span>🔍</span>
+</div>
+<div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="count">0</span></div>
+</div>
+</header><section class="hero">
+<h1>Level Up Your Style</h1>
+<p>Premium waterproof vinyl stickers</p>
+<button onclick="scrollToShop()">Shop Now</button>
+</section><div class="container" id="shop"><div class="filters">
+<button class="filter-btn active" onclick="filter(event,'all')">All</button>
+<button class="filter-btn" onclick="filter(event,'anime')">Anime</button>
+<button class="filter-btn" onclick="filter(event,'gaming')">Gaming</button>
+<button class="filter-btn" onclick="filter(event,'funny')">Funny</button>
+</div><div class="grid" id="grid"></div>
+</div><div class="overlay" id="overlay" onclick="toggleCart()"></div><div class="cart" id="cart">
+<div class="cart-header">
+<h3>Your Cart</h3>
+<button onclick="toggleCart()">✖</button>
+</div>
+<div class="cart-items" id="items"></div>
+<div class="total">Total: ₹<span id="total">0</span></div>
+<button class="checkout" onclick="whatsappCheckout()">WhatsApp Checkout</button>
+</div><div class="mobile-bar">
+<div><b>Items:</b> <span id="mcount">0</span></div>
+<button onclick="toggleCart()">View Cart</button>
+</div><footer>
+© 2026 StickyWorld Pro
+</footer><script>
+const data=[
+{id:1,name:"Anime Rage",price:149,cat:"anime",img:"https://picsum.photos/400?1",rating:5},
+{id:2,name:"Chibi Ninja",price:129,cat:"anime",img:"https://picsum.photos/400?2",rating:4},
+{id:3,name:"Pro Gamer",price:99,
